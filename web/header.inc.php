@@ -17,10 +17,11 @@
     along with SMySqLogger.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<table width="100%" bgcolor="#cccccc"><tr>
+<table width="100%" bgcolor="#cccccc" style="font-family:'Lucida Sans Unicode', 'Lucida Grande', Sans-Serif"><tr>
 <td align="center">&nbsp;<a href="index.php">Now</a>&nbsp;</td>
 <td align="center">&nbsp;<a href="today.php">Today</a>&nbsp;</td>
 <td align="center">&nbsp;<a href="daily.php">Daily</a>&nbsp;</td>
 <td align="center">&nbsp;<a href="monthly.php">Monthly</a>&nbsp;</td>
+<td align="center">&nbsp;<a href="yearly.php">Yearly</a>&nbsp;</td>
 <td align="center">&nbsp;<a href="stats.php">Tops</a>&nbsp;</td>
 </tr></table>

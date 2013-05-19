@@ -45,7 +45,6 @@
 
     mysql_close($conn);
 ?>
-
 <html>
     <head>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>

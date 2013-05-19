@@ -26,32 +26,26 @@
     mysql_select_db("sma", $conn) or die ("Database not found.");
 
     // Get monthly totals
-    $query="select concat(year(logdate), '-', month(logdate)), year(logdate), month(logdate), max(e_total_kwh) - min(e_total_kwh) from logged_values group by year(logdate), month(logdate) order by year(logdate), month(logdate)";
+    $query="select concat(year(logdate), '-', month(logdate)), max(e_total_kwh) - min(e_total_kwh) from logged_values group by year(logdate), month(logdate) order by year(logdate), month(logdate)";
     $result = mysql_query($query) or die("Failed Query : ".$query);
+    $serMonths = "";
     $serEtot = "";
 	$nbMonths = 0;
 	$periodTotal = 0;
-	$yearMonthArray = array();
     while ($thisrow=mysql_fetch_row($result)) {
-		$year=$thisrow[1];
-		$month=$thisrow[2];
-		if (empty($yearMonthArray[$year])) {
-			$yearMonthArray[$year] = array();
-		}
-		$yearMonthArray[$year][$month] = $thisrow[3];
-		
-        if ($serEtot != "") {
+        if ($serMonths != "") {
+            $serMonths = $serMonths.", ";
             $serEtot = $serEtot.", ";
         }
-        $serEtot = $serEtot.$thisrow[3];
-				
+        $serMonths = $serMonths."'".$thisrow[0]."'";
+        $serEtot = $serEtot.$thisrow[1];
 		$nbMonths++;
-		$periodTotal += $thisrow[3];
+		$periodTotal += $thisrow[1];
     }
 	if ($thisrow[0] == date_format(new DateTime(), "Y-m")) {
 		// Ignore this month for average production calculation (because it is probably not complete)
 		$nbMonths--;
-		$periodTotal -= $thisrow[3];
+		$periodTotal -= $thisrow[1];
 	}
 	
     mysql_free_result($result);
@@ -86,7 +80,7 @@ $(document).ready(function() {
             text: null
         },
         xAxis: {
-            categories: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+            categories: [<?php echo $serMonths; ?>]
         },        
         yAxis: {
             min: 0,
@@ -95,15 +89,11 @@ $(document).ready(function() {
             }
         },
         legend: {
-				layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                floating: true,
-                shadow: true              
+              enabled:false
         },
         tooltip: {
             formatter: function() {
-                return ''+this.x +' '+this.series.name+': '+ (Math.floor(100*this.y))/100 +' kWh';
+                return ''+this.x +': '+ (Math.floor(100*this.y))/100 +' kWh';
             }
         },
         plotOptions: {
@@ -112,46 +102,21 @@ $(document).ready(function() {
                 borderWidth: 0
             }
         },
-        series: [
-<?php 
-	$first = true;
-	foreach ($yearMonthArray as $year => $monthValues) {
-		if (!$first) {
-			echo ",";
-		}
-		$first = false;
-?>
-			{
-				name: '<?php echo $year ?>',
-				events: {
-					click: function(event) {
-						// Link to details of the month
-						var start = event.point.series.name + '%2F' + event.point.category + "%2F01"; // First day of this month
-						// Compute end of the month
-						var endDate = new Date(event.point.series.name, event.point.category, 1); // First day of this month
-						endDate.setMonth(endDate.getMonth() + 1); // First day of next month
-						endDate.setDate(endDate.getDate() - 1); // Last day of this month
-						window.location.replace('daily.php?startDate=' + start + "%2F01&endDate=" + endDate.getFullYear() + '%2F' + (endDate.getMonth()<10?'0':'') + endDate.getMonth() + '%2F' + (endDate.getDate()<10?'0':'') + endDate.getDate());
-					}
-				},
-				data: [<?php 
-					for ($month=1; $month < 13; $month++) {
-						if (empty($yearMonthArray[$year][$month])) {
-							echo 0;
-						}
-						else {
-							echo $yearMonthArray[$year][$month];
-						}
-						if ($month < 12) {
-							echo ", ";
-						}
-					}
-				?>]
-			}
-<?php
-	}
-?>
-		]
+        series: [{
+            name: 'Monthly',
+            events: {
+                click: function(event) {
+                    // Link to details of the month
+					var dateParts = event.point.category.split('-');
+					// Compute end of the month
+					var endDate = new Date(dateParts[0], dateParts[1], 1); // First day of this month
+					endDate.setMonth(endDate.getMonth() + 1); // First day of next month
+					endDate.setDate(endDate.getDate() - 1); // Last day of this month
+                    window.location.replace('daily.php?startDate=' + (event.point.category).replace(/-/g,'%2F') + "%2F01&endDate=" + endDate.getFullYear() + '%2F' + (endDate.getMonth()<10?'0':'') + endDate.getMonth() + '%2F' + (endDate.getDate()<10?'0':'') + endDate.getDate());
+                }
+            },
+            data: [<?php echo $serEtot; ?>]
+        }]
     });
    
    
@@ -168,20 +133,5 @@ $(document).ready(function() {
             </tr></table>
         </form>
         <div id="totalChart" style="width: 100%; height: 90%"></div>
-		<!--
-		<?php 
-			foreach ($yearMonthArray as $year => $monthValues) {
-				echo $year;
-				for ($month=1; $month < 13; $month++) {
-					if (empty($yearMonthArray[$year][$month])) {
-						echo " ", $month, ":", 0;
-					}
-					else {
-						echo " ", $month, ":", $yearMonthArray[$year][$month];
-					}
-				}
-			}
-		?>
-		-->
     </body>
 </html>
