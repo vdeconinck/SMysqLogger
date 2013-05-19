@@ -1,0 +1,34 @@
+SMysqLogger - a MySql logger for SMA inverters
+
+This project was written to monitor a solar production site using a SMA inverter.
+It consists of:
+ * a logger part written in C and running on a Synology NAS. It sits under /yasdi/logger
+ * a web user interface written in PHP. It sits under /web
+ 
+The two parts are completely independant and just target the same database.
+
+Requirements (included):
+
+The logger part requires:
+* YASDI, the SMA library implementing exchange protocol with the inverter. Copyright(C) 2001-2008 SMA Solar Technology AG
+
+The UI part requires:
+* JQuery jQuery JavaScript Library. Copyright 2011, John Resig
+* jQuery UI. Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+* Highcharts JS, a graph rendering library in Javascript. Copyright(c) 2009-2010 Torstein Hønsi
+* CSS/JavaScript Animated Odometer. Copyright (C) 2008 Gavin Brock
+
+More information can be found at http://www.deconinck.info/smysqlogger/index_en.xhtml
+
+SMySqLogger is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SMySqLogger is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with SMySqLogger.  If not, see <http://www.gnu.org/licenses/>.
