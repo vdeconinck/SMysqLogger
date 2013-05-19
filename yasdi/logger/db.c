@@ -1,4 +1,4 @@
-/*  Copyright (C) 2011 Vincent Deconinck (known on google mail as user vdeconinck)
+/*  Copyright (C) 2011-2012 Vincent Deconinck (known on google mail as user vdeconinck)
 
     This file is part of the SMySqLogger project.
 	

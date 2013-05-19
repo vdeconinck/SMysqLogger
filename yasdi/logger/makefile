@@ -1,4 +1,4 @@
-# Copyright (C) 2011 Vincent Deconinck (known on google mail as user vdeconinck)
+# Copyright (C) 2011-2012 Vincent Deconinck (known on google mail as user vdeconinck)
 # 
 # This file is part of the SMySqLogger project.
 #	
@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with SMySqLogger.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# This builds the old non-daemon version of the logger
+
+	
 # --- macros
 CC=gcc
 CFLAGS= -O3 -I../include/ -I../smalib -I../libs -I../projects/generic-cmake/incprj -I../os -I../core -I../protocol -Imysql_incl -DBIG_JOINS=1 -fno-strict-aliasing -DUNIV_LINUX -g 

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2011 Vincent Deconinck (known on google mail as user vdeconinck)
+/*  Copyright (C) 2011-2012 Vincent Deconinck (known on google mail as user vdeconinck)
 
     This file is part of the SMySqLogger project.
 	
@@ -16,7 +16,6 @@
     along with SMySqLogger.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TODO : make this a daemon
 // TODO : standardize logging (only if -verbose ? only if not daemon ? use stderr or stdout ?)
  
 /*************************************************************************
