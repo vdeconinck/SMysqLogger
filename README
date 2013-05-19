@@ -18,7 +18,7 @@ The UI part requires:
 * Highcharts JS, a graph rendering library in Javascript. Copyright(c) 2009-2010 Torstein Hønsi
 * CSS/JavaScript Animated Odometer. Copyright (C) 2008 Gavin Brock
 
-More information can be found at http://www.deconinck.info/smysqlogger/index_en.xhtml
+More information can be found on the wiki at https://github.com/vdeconinck/SMysqLogger/wiki
 
 SMySqLogger is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
