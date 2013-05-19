@@ -14,6 +14,8 @@
 
     You should have received a copy of the GNU General Public License
     along with SMySqLogger.  If not, see <http://www.gnu.org/licenses/>.
+	
+	This is the old non-daemon version of the logger
 */
 
 // TODO : standardize logging (only if -verbose ? only if not daemon ? use stderr or stdout ?)
